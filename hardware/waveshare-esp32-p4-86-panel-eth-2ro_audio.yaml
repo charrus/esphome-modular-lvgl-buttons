@@ -69,7 +69,6 @@ switch:
     id: audio_amplifier
     restore_mode: ALWAYS_OFF
 
-
 # Media Player
 media_player:
   - platform: speaker
@@ -133,7 +132,6 @@ media_player:
           then:
             - micro_wake_word.start
 
-
 sensor:
   - platform: template
     name: "Voice Assistant State"
@@ -166,7 +164,6 @@ micro_wake_word:
       - logger.log: "Wake word detected"
       - voice_assistant.start:
           wake_word: !lambda return wake_word;
-
 
 voice_assistant:
   microphone: esp32_microphone
