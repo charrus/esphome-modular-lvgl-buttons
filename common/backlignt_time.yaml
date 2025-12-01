@@ -45,21 +45,21 @@ lvgl:
       - logger.log: "LVGL is idle"
       - if:
           condition:
-            - lambda: 'return id(brightness_mode).state == "Day";'
+            - lambda: 'return id(brightness_mode).current_option() == "Day";'
           then:
             - light.turn_on:
                 id: display_backlight
                 brightness: ${touchscreen_daytime_brightness}
       - if:
           condition:
-            - lambda: 'return id(brightness_mode).state == "Evening";'
+            - lambda: 'return id(brightness_mode).current_option() == "Evening";'
           then:
             - light.turn_on:
                 id: display_backlight
                 brightness: ${touchscreen_nighttime_brightness}
       - if:
           condition:
-            - lambda: 'return id(brightness_mode).state == "Night";'
+            - lambda: 'return id(brightness_mode).current_option() == "Night";'
           then:
             - light.turn_off: display_backlight
             - lvgl.pause:
@@ -74,21 +74,21 @@ touchscreen:
         - lvgl.widget.redraw
         - if:
             condition:
-              - lambda: 'return id(brightness_mode).state == "Day";'
+              - lambda: 'return id(brightness_mode).current_option() == "Day";'
             then:
               - light.turn_on:
                   id: display_backlight
                   brightness: ${touchscreen_daytime_brightness}
         - if:
             condition:
-              - lambda: 'return id(brightness_mode).state == "Evening";'
+              - lambda: 'return id(brightness_mode).current_option() == "Evening";'
             then:
               - light.turn_on:
                   id: display_backlight
                   brightness: ${touchscreen_nighttime_brightness}
         - if:
             condition:
-              - lambda: 'return id(brightness_mode).state == "Night";'
+              - lambda: 'return id(brightness_mode).current_option() == "Night";'
             then:
               - light.turn_on:
                   id: display_backlight
@@ -111,21 +111,21 @@ select:
         - lvgl.widget.redraw
         - if:
             condition:
-              - lambda: 'return id(brightness_mode).state == "Day";'
+              - lambda: 'return id(brightness_mode).current_option() == "Day";'
             then:
               - light.turn_on:
                   id: display_backlight
                   brightness: ${touchscreen_daytime_brightness}
         - if:
             condition:
-              - lambda: 'return id(brightness_mode).state == "Evening";'
+              - lambda: 'return id(brightness_mode).current_option() == "Evening";'
             then:
               - light.turn_on:
                   id: display_backlight
                   brightness: ${touchscreen_nighttime_brightness}
         - if:
             condition:
-              - lambda: 'return id(brightness_mode).state == "Night";'
+              - lambda: 'return id(brightness_mode).current_option() == "Night";'
             then:
               - light.turn_on:
                   id: display_backlight
