@@ -162,7 +162,7 @@ text_sensor:
                       id: ${widget_name}_light_saturation_slider
                       value: !lambda return id(${widget_name}_current_saturation);
             
-            # NEW: Update the light color when HS changes from HA
+            # Update the light color when HS changes from HA
             # But only if we're in HS mode
             - if:
                 condition:
@@ -193,7 +193,7 @@ text_sensor:
             id(${widget_name}_supports_color_temp)
           );
           
-          ESP_LOGD("light_widget", "═══════════════════════════════════════");
+          ESP_LOGD("light_widget", "═════════════════════════════════════════════════");
           ESP_LOGD("light_widget", "Supported modes: %s", modes.c_str());
           ESP_LOGD("light_widget", "Color temp: %d, HS: %d, RGB: %d, Brightness: %d",
             id(${widget_name}_supports_color_temp),
@@ -202,7 +202,7 @@ text_sensor:
             id(${widget_name}_supports_brightness)
           );
           
-          // NEW: Smart selection of the initial mode
+          // Smart selection of the initial mode
           
           if (id(${widget_name}_supports_hs) || id(${widget_name}_supports_rgb)) {
             // If HS/RGB is supported - start with it (more versatile)
@@ -218,7 +218,7 @@ text_sensor:
             ESP_LOGD("light_widget", "→ Initial mode: N/A (no color modes)");
           }
           
-          ESP_LOGD("light_widget", "═══════════════════════════════════════");
+          ESP_LOGD("light_widget", "═════════════════════════════════════════════════");
       - script.execute: ${widget_name}_update_widget_visibility
 
   - platform: homeassistant
@@ -268,7 +268,6 @@ lvgl:
         - color: 0xFFD6A0
           position: 255
 
-
   pages:
     - id: ${widget_name}_light_page
       bg_color: slate_blue_gray
@@ -309,7 +308,7 @@ lvgl:
                   knob:
                     bg_opa: transp
                   
-                  # NEW: on_value to update the light color in real time
+                  # on_value to update the light color in real time
                   on_value:
                     - globals.set:
                         id: ${widget_name}_current_brightness
@@ -323,7 +322,7 @@ lvgl:
                           entity_id: "${light_entity}"
                           brightness: !lambda return int(x);
 
-  # SATURATION SLIDER
+        # SATURATION SLIDER
         - obj:
             id: ${widget_name}_light_saturation_background
             x: -60
@@ -359,7 +358,7 @@ lvgl:
                   knob:
                     bg_opa: transp
                   
-                  # NEW: on_value to update the light color in real time
+                  # on_value to update the light color in real time
                   on_value:
                     - globals.set:
                         id: ${widget_name}_current_saturation
@@ -377,10 +376,10 @@ lvgl:
                           hue: !lambda return id(${widget_name}_current_hue);
                           sat: !lambda return x;
 
-  # LIGHT NAME                  
+        # LIGHT NAME                  
         - label:
             id: ${widget_name}_light_name_label
-            y: -30
+            y: -420
             x: 0
             height: 40
             width: 240
@@ -391,7 +390,23 @@ lvgl:
             text_color: misty_blue
             text: "Friendly name"
 
-  # LIGHT ARC
+        # Home
+        - label:
+            id: ${widget_name}_home_button
+            y: -5
+            x: -5
+            height: 40
+            width: 40
+            text_font: mdi_icons_40
+            text_align: center
+            text_color: white
+            align: bottom_left
+            text: $mdi_home
+            on_short_click:
+                then:
+                  lvgl.page.show: main_page           
+
+        # LIGHT ARC
         - obj:
             id: ${widget_name}_light_bg_main_temperature
             hidden: false
@@ -406,7 +421,6 @@ lvgl:
             border_width: 0
             shadow_opa: transp
             widgets:
-
               - obj:
                   x: 240
                   width: 480
@@ -526,7 +540,7 @@ lvgl:
                           border_width: 4
                           shadow_opa: transp
 
-                        # NEW: on_value to update the light color in real time
+                        # on_value to update the light color in real time
                         on_value:
                           - globals.set:
                               id: ${widget_name}_current_hue
@@ -572,7 +586,7 @@ lvgl:
                           border_width: 4
                           shadow_opa: transp
 
-                        # NEW: on_value to update the light color in real time
+                        # on_value to update the light color in real time
                         on_value:
                           - globals.set:
                               id: ${widget_name}_current_color_temp
@@ -586,7 +600,7 @@ lvgl:
                                 entity_id: "${light_entity}"
                                 color_temp_kelvin: !lambda return int(x);
 
-  # LIGHTBULB
+        # LIGHTBULB
         - obj:
             id: ${widget_name}_lightbulb_btn
             x: 0
@@ -623,7 +637,7 @@ lvgl:
                   src: lightbulb_image
 
 
-  # BACK
+        # BACK
         - obj:
             id: ${widget_name}_light_back_btn 
             x: 150
@@ -653,7 +667,6 @@ lvgl:
               # - lvgl.widget.hide: light_select_widget
               # - delay: 100ms
               # - lvgl.page.show: home_page
-
 
 script:
   # ═══════════════════════════════════════════════════════════════════════════
@@ -693,8 +706,6 @@ script:
                   - lvgl.obj.update:
                       id: ${widget_name}_light_brightness_background
                       x: -160
-
-
 
   # ═══════════════════════════════════════════════════════════════════════════
   # SCRIPT: Update the lightbulb widget color
@@ -1116,3 +1127,8 @@ script:
                             id(${widget_name}_is_temp_mode) = true;
                         - script.execute: ${widget_name}_toggle_gradient
 
+image:
+  rgb565:
+    alpha_channel:  
+      - file: 'esphome-modular-lvgl-buttons/assets/images/light/lightbulb.png'
+        id: lightbulb_image                        

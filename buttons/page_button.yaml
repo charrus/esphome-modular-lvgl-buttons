@@ -13,11 +13,13 @@ widgets:
       text_font: $icon_font
       align: top_left
       id: icon_${uid}
+      text_color: $label_off_color
       text: ${icon}
   - label:
       align: bottom_left
       id: label_${uid}
+      text_color: $label_off_color
       text: ${text}
 on_short_click:
     then:
-      lvgl.page.show: ${page}
+      lvgl.page.show: ${page} 

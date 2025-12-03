@@ -25,19 +25,16 @@ widgets:
       y: 5
       width: 40
       height: 165
-      pad_all: 0
       min_value: 0
       max_value: 255
-      radius: 10px
+      radius: 10
       knob:
+        pad_top: -15
+        pad_bottom: -15 
+        radius: 5        
         bg_color: white
-        radius: 2px
-        pad_left: 0
-        pad_right: 0
-        pad_top: 0
-        pad_bottom: 0
       indicator:
-        radius: 0px
+        radius: 0
         bg_color: gray
       on_release:
         - homeassistant.action:
@@ -45,27 +42,15 @@ widgets:
             data:
               entity_id: ${entity_id}
               brightness: !lambda return int(x);
-    widget: ${widget_name}_lightbulb_btn
-    on_click:
-  # SHORT press (50-500ms) - ALWAYS toggles the light
-      - min_length: 50ms
-        max_length: 500ms
-        then:
-          - homeassistant.action:
-              action: light.toggle
-              data:
-                entity_id: ${entity_id}
-      
-  # LONG press (800-3000ms) - switch mode (only if supported)
-      - min_length: 800ms
-        max_length: 3000ms
-        then:
-          lvgl.page.show: ${uid}_light_page
+on_short_click:
+    then:
+      - homeassistant.action:
+          action: light.toggle
+          data:
+            entity_id: ${entity_id}
+on_long_press:
+    then:
+      lvgl.page.show: ${uid}_light_page
 
       
-packages:
-  light_page: !include
-    file: esphome-modular-lvgl-buttons/pages/light.yaml
-    vars:
-      light_entity: ${entity_id}
-      widget_name: ${uid}      
+  
