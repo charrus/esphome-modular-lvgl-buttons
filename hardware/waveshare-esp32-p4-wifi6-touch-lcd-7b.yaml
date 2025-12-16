@@ -4,8 +4,6 @@
 # Schematic: https://files.waveshare.com/wiki/ESP32-P4-WIFI6-Touch-LCD-7B/ESP32-P4-WIFI6-Touch-LCD-7B.pdf
 ---
 esphome:
-  name: waveshare-esp32-p4-touch-lcd-7b
-  friendly_name: waveshare-esp32-p4-wifi6-touch-lcd-7b
   min_version: 2025.11.0
   project:
     name: "Waveshare.ESP32-P4-WIFI6-Touch-LCD-7B"
@@ -18,13 +16,12 @@ external_components:
     refresh: 1h
 
 esp32:
-  board: esp32-p4-evboard
+  variant: esp32p4
+  flash_size: 32MB
   framework:
     type: esp-idf
-    version: recommended
     advanced:
       enable_idf_experimental_features: true
-  flash_size: 32MB
   cpu_frequency: 360MHz
 
 esp32_hosted:

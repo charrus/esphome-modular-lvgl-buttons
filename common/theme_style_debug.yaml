@@ -26,8 +26,6 @@ lvgl:
       press_lock: false
       scroll_on_focus: true
       radius: 25px
-      # width: $button_width
-      # height: $button_height_single
       width: 100%
       height: 100%      
       pad_all: 10px
@@ -40,9 +38,13 @@ lvgl:
 
   style_definitions:
     - id: page_style
+      scrollbar_mode: "OFF"
       bg_color: black
       bg_opa: cover
-      pad_all: 0
+      pad_all: 1
+    - id: time_style
+      text_color: white
+      align: center      
 
 select:
   - platform: template
@@ -53,7 +55,7 @@ select:
     options:
       - Dark
       - Light
-    initial_option: Light
+    initial_option: Dark
     on_value:
       then:
         - if:

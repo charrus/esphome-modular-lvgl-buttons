@@ -25,20 +25,19 @@ substitutions:
   screen_night_minute: '0'
 
   # Screen Size
-  screen_height: '480'
-  screen_width: '480'
+  screen_height: 480
+  screen_width: 800
 
 esphome:
-  name: "guition-4848s040"
-  friendly_name: "Guition 4848s040"
-  comment: "Guition ESP32-S3-4848S040 480px * 480px Smart Screen"
+  name: "sunton-esp32-8048s070"
+  friendly_name: "Sunton_4848s040"
+  comment: "Sunton ESP32-S3-8048S070 480px X 800px Smart Screen"
   on_boot:
     - priority: 400
       then:
         - script.execute: update_loading_page
 
 logger:
-  level: debug
 
 # Time update script - This is run once per second. Use it to update any time related labels.
 script:
@@ -69,9 +68,9 @@ packages:
   # theme_style: !include esphome-modular-lvgl-buttons/common/theme_style_debug.yaml
   # Include if your touch screen has a backlight. Also sets the time from HA
   backlight: !include esphome-modular-lvgl-buttons/common/backlignt_time.yaml
-
+  
   # Harware description file
-  hardware: !include esphome-modular-lvgl-buttons/hardware/guition-esp32-s3-4848s040.yaml
+  hardware: !include esphome-modular-lvgl-buttons/hardware/sunton-esp32-8048s070.yaml
   
   # Basic boot screen with ESPHome logo and device diagnostic info
   loading_screen: !include esphome-modular-lvgl-buttons/pages/loading_480px.yaml
@@ -98,7 +97,7 @@ packages:
     vars:
       uid: button_2
       row: 0
-      column: 3
+      column: 6
       text: 00:00
       click_page: info_screen
       
@@ -131,11 +130,13 @@ packages:
       light_entity: "light.athom_rgb_light_d93662_rgb_light_strip"
       widget_name: "button_4"
 
-# This is the main LVGL section. We start with a simple 4x4 grid.
+
+# This is the main LVGL section. We start with a simple grid.
 lvgl:
+  buffer_size: 100%
   pages:
     - id: main_page
-      layout: 4x4
+      layout: 4x7
       styles: page_style
       <<: !include esphome-modular-lvgl-buttons/widgets/swipe_navigation.yaml
       widgets:
@@ -145,7 +146,7 @@ lvgl:
               grid_cell_x_align: stretch
               grid_cell_y_align: stretch
               grid_cell_row_pos: 3
-              grid_cell_column_pos: 3
+              grid_cell_column_pos: 6
               grid_cell_row_span: 1
               grid_cell_column_span: 1
               outline_width: 1   # debug code - This is for visualizing boundries remove for production
@@ -155,7 +156,7 @@ lvgl:
                     text_font: $text_font
                     align: center
                     text_color: white
-                    text: "Cell 3,3"
+                    text: "Cell 3,7"
   
 # If you want to use other icons add them to the list here
 font:

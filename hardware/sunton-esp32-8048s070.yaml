@@ -4,28 +4,18 @@
 # Hardware configuration file
 
 esphome:
-  min_version: 2025.7.0
+  min_version: 2025.11.0
   project:
     name: "Sunton.ESP32-S3-8048S070"
     version: "1.0"
-  platformio_options:
-    build_flags: "-DBOARD_HAS_PSRAM"
-    board_build.esp-idf.memory_type: qio_opi
-    board_build.flash_mode: dio
-    board_upload.maximum_ram_size: 524288
 
 esp32:
-  board: esp32-s3-devkitc-1
   variant: esp32s3
   flash_size: 16MB
   framework:
     type: esp-idf
-    sdkconfig_options:
-      COMPILER_OPTIMIZATION_SIZE: y
-      CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240: y
-      CONFIG_ESP32S3_DATA_CACHE_64KB: y
-      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: y
-      CONFIG_SPIRAM_RODATA: y
+    advanced:
+       execute_from_psram: true
 
 psram:
   mode: octal
@@ -81,7 +71,7 @@ media_player:
 output:
   - platform: ledc
     id: gpio_backlight_pwm
-    pin: 2
+    pin: GPIO02
     frequency: 1220
 
 light:
